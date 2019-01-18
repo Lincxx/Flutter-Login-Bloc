@@ -10,18 +10,20 @@ class LoginScreen extends StatelessWidget {
         children: <Widget>[
           emailField(),
           passwordField(),
-          Container(margin: EdgeInsets.only(top: 20.0),),
+          Container(
+            margin: EdgeInsets.only(top: 20.0),
+          ),
           submitButton()
         ],
       ),
     );
   }
 
-  Widget emailField(){
+  Widget emailField() {
     return StreamBuilder(
       stream: bloc.email,
-      builder: (context, snapshot){
-         return TextField(
+      builder: (context, snapshot) {
+        return TextField(
           onChanged: bloc.changeEmail,
           keyboardType: TextInputType.emailAddress,
           decoration: InputDecoration(
@@ -31,20 +33,24 @@ class LoginScreen extends StatelessWidget {
           ),
         );
       },
-    );   
-  }
-
-   Widget passwordField(){
-    return TextField(
-      //obscureText: true,
-      decoration: InputDecoration(
-        hintText: 'password',
-        labelText: 'Password'
-      ),
     );
   }
 
-  Widget submitButton(){
+  Widget passwordField() {
+    return StreamBuilder(
+        stream: bloc.password,
+        builder: (context, snapshot) {
+          return TextField(
+            onChanged: bloc.changePassword,
+            decoration: InputDecoration(
+                hintText: 'password',
+                labelText: 'Password',
+                errorText: snapshot.error),
+          );
+        });
+  }
+
+  Widget submitButton() {
     return RaisedButton(
       child: Text('Login'),
       color: Colors.blue,
