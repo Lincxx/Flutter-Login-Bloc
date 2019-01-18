@@ -4,8 +4,12 @@ import 'validators.dart';
 import 'package:rxdart/rxdart.dart';
 
 class Bloc with Validators {
-  final _email = StreamController<String>.broadcast();
-  final _password = StreamController<String>.broadcast();
+  // final _email = StreamController<String>.broadcast();
+  // final _password = StreamController<String>.broadcast();
+
+  //replacing this streamController with BehaviorSubect so we can get older data, whereas a StreamController there is not a way to do that 
+  final _email = BehaviorSubject<String>();
+  final _password = BehaviorSubject<String>();
 
   //Add data to a stream
   Stream<String> get email => _email.stream.transform(validateEmail);
@@ -20,7 +24,10 @@ class Bloc with Validators {
 
 
   submit() {
-    
+    final validEmial = _email.value;
+    final validPassword = _password.value;
+    print('Email is $validEmial');
+    print('Password is $validPassword');
   }
 
   //Clean up 
